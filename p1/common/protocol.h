@@ -50,31 +50,31 @@
 //
 
 /// Maximum length of a user name
-const int LEN_UNAME = 64;
+static inline constexpr auto LEN_UNAME{64};
 
 /// Maximum length of a user's actual password
-const int LEN_PASSWORD = 64;
+static inline constexpr auto LEN_PASSWORD{64};
 
 /// Maximum length of a hashed password
-const int LEN_PASSHASH = SHA256_DIGEST_LENGTH;
+static inline constexpr auto LEN_PASSHASH{SHA256_DIGEST_LENGTH};
 
 /// Maximum length of a user's profile file
-const int LEN_PROFILE_FILE = 1048576;
+static inline constexpr auto LEN_PROFILE_FILE{1048576};
 
 /// Length of an rblock or kblock
-const int LEN_RKBLOCK = 256;
+static inline constexpr auto LEN_RKBLOCK{256};
 
 /// Length of an RSA public key
 ///
 /// NB: It would be better not to hard-code this, since it's not defined by us,
 ///     but by OpenSSL
-const int LEN_RSA_PUBKEY = 426;
+static inline constexpr auto LEN_RSA_PUBKEY{426};
 
 /// Length of rblock content before it is encrypted
-const int LEN_RBLOCK_CONTENT = 128;
+static inline constexpr auto LEN_RBLOCK_CONTENT{128};
 
 /// Length of salt
-const int LEN_SALT = 16;
+static inline constexpr auto LEN_SALT{16};
 
 //
 // Request Messages
@@ -86,7 +86,7 @@ const int LEN_SALT = 16;
 /// @kblock   pad0("PUB_KEY_")
 /// @response @pubkey.<EOF>
 /// @errors   None
-const std::string REQ_KEY = "PUB_KEY_";
+static inline constexpr std::string_view REQ_KEY{"PUB_KEY_"};
 
 /// Request the creation of a new user, with null content.  The user name must
 /// not already exist.
@@ -102,7 +102,7 @@ const std::string REQ_KEY = "PUB_KEY_";
 /// @errors   ERR_USER_EXISTS -- @u already exists as a user
 ///           ERR_REQUEST_FMT -- Server unable to extract @u or @p from request
 ///           ERR_CRYPTO      -- Server could not decrypt @ablock
-const std::string REQ_REG = "REGISTER";
+static inline constexpr std::string_view REQ_REG{"REGISTER"};
 
 /// Force the server to stop.  @u and @p represent a valid user's username and
 /// password.
@@ -122,7 +122,7 @@ const std::string REQ_REG = "REGISTER";
 ///           ERR_LOGIN       -- @p is not @u's password
 ///           ERR_REQUEST_FMT -- Server unable to extract @u or @p from request
 ///           ERR_CRYPTO      -- Server could not decrypt @ablock
-const std::string REQ_BYE = "EXIT____";
+static inline constexpr std::string_view REQ_BYE{"EXIT____"};
 
 /// Force the server to send all its data to disk.  @u and @p represent a valid
 /// user's username and password.
@@ -143,7 +143,7 @@ const std::string REQ_BYE = "EXIT____";
 ///           ERR_LOGIN       -- @p is not @u's password
 ///           ERR_REQUEST_FMT -- Server unable to extract @u or @p from request
 ///           ERR_CRYPTO      -- Server could not decrypt @ablock
-const std::string REQ_SAV = "PERSIST_";
+static inline constexpr std::string_view REQ_SAV{"PERSIST_"};
 
 /// Allow user @u (with password @p) to set her profile content to the byte
 /// stream @b.
@@ -161,7 +161,7 @@ const std::string REQ_SAV = "PERSIST_";
 ///           ERR_REQUEST_FMT -- Server unable to extract @u or @p or @b from
 ///                              request
 ///           ERR_CRYPTO      -- Server could not decrypt @ablock
-const std::string REQ_SET = "SETPFILE";
+static inline constexpr std::string_view REQ_SET{"SETPFILE"};
 
 /// Allow user @u (with password @p) to fetch the profile content @c associated
 /// with user @w.
@@ -181,7 +181,7 @@ const std::string REQ_SET = "SETPFILE";
 ///           ERR_REQUEST_FMT -- Server unable to extract @u or @p or @w from
 ///                              request
 ///           ERR_CRYPTO      -- Server could not decrypt @ablock
-const std::string REQ_GET = "GETPFILE";
+static inline constexpr std::string_view REQ_GET{"GETPFILE"};
 
 /// Allow user @u (with password @p) to get a newline-separated list (@l) of the
 /// names of all the users.  @u will appear in @l, @l will not be sorted, and @l
@@ -199,44 +199,45 @@ const std::string REQ_GET = "GETPFILE";
 ///           ERR_LOGIN       -- @p is not @u's password
 ///           ERR_REQUEST_FMT -- Server unable to extract @u or @p from request
 ///           ERR_CRYPTO      -- Server could not decrypt @ablock
-const std::string REQ_ALL = "ALLUSERS";
+static inline constexpr std::string_view REQ_ALL{"ALLUSERS"};
 
 //
 // Response Messages
 //
 
 /// Response code to indicate that the command was successful
-const std::string RES_OK = "___OK___";
+static inline constexpr std::string_view RES_OK{"___OK___"};
 
 /// Response code to indicate that the registered user already exists
-const std::string RES_ERR_USER_EXISTS = "ERR_USER_EXISTS";
+static inline constexpr std::string_view RES_ERR_USER_EXISTS{"ERR_USER_EXISTS"};
 
 /// Response code to indicate that the client gave a bad username or password
-const std::string RES_ERR_LOGIN = "ERR_LOGIN";
+static inline constexpr std::string_view RES_ERR_LOGIN{"ERR_LOGIN"};
 
 /// Response code to indicate that the client request was improperly formatted
-const std::string RES_ERR_REQ_FMT = "ERR_REQ_FMT";
+static inline constexpr std::string_view RES_ERR_REQ_FMT{"ERR_REQ_FMT"};
 
 /// Response code to indicate that there is no data to send back
-const std::string RES_ERR_NO_DATA = "ERR_NO_DATA";
+static inline constexpr std::string_view RES_ERR_NO_DATA{"ERR_NO_DATA"};
 
 /// Response code to indicate that the user being looked up is invalid
-const std::string RES_ERR_NO_USER = "ERR_NO_USER";
+static inline constexpr std::string_view RES_ERR_NO_USER{"ERR_NO_USER"};
 
 /// Response code to indicate that the requested command doesn't exist
-const std::string RES_ERR_INV_CMD = "ERR_INVALID_COMMAND";
+static inline constexpr std::string_view RES_ERR_INV_CMD{"ERR_INVALID_COMMAND"};
 
 /// Response code to indicate that the client didn't get as much data as
 /// expected
-const std::string RES_ERR_XMIT = "ERR_XMIT";
+static inline constexpr std::string_view RES_ERR_XMIT{"ERR_XMIT"};
 
 /// Response code to indicate that the client data can't be decrypted with the
 /// provided AES key
-const std::string RES_ERR_CRYPTO = "ERR_CRYPTO";
+static inline constexpr std::string_view RES_ERR_CRYPTO{"ERR_CRYPTO"};
 
 /// Response code to indicate that the server had an internal error, such as a
 /// bad read from a file, error creating a salt, or failure to fork()
-const std::string RES_ERR_SERVER = "ERR_SERVER";
+static inline constexpr std::string_view RES_ERR_SERVER{"ERR_SERVER"};
 
 /// Response code to indicate that something has not been implemented
-const std::string RES_ERR_UNIMPLEMENTED = "ERR_UNIMPLEMENTED";
+static inline constexpr std::string_view RES_ERR_UNIMPLEMENTED{
+    "ERR_UNIMPLEMENTED"};
